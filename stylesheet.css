@@ -1,0 +1,16 @@
+body {
+
+    background-image: url('images/park&Rec.png');
+    font-family: 'Old Standard TT', serif;
+    background-size: cover;
+    background-repeat: repeat;
+    
+
+}
+
+.container {
+
+    border: black bold;
+    object-position: 80%;
+
+}
