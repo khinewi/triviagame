@@ -10,7 +10,9 @@ body {
 
 .container {
 
-    border: black bold;
-    object-position: 80%;
+    border: 1px solid black;
+    width: 80%;
+    background-color: transparent white;
+    display: flex center;
 
 }
