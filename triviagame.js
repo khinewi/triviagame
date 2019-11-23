@@ -2,15 +2,28 @@ $(document).ready(function () {
     var number = 60;
     var intervalId;
 
+    var playButton = $('#play');
+    var correctCountDiv = $('#Correct');
+    var wrongCountDiv = $('#Wrong');
+    var resetButton = $('<button>');
+    var correctAnswerCount = 0;
+    var wrongAnswerCount = 0;
+    resetButton.attr('id', 'reset');
+    resetButton.html('Reset');
+    resetButton.on('click', reset);
+
     function run() {
         clearInterval(intervalId);
         intervalId = setInterval(decrement, 1000);
     }
 
-    // function reset() {
-    //     number = 60;
-    //     run();
-    // }
+    function reset() {
+        number = 60;
+        correctAnswerCount = 0;
+        wrongAnswerCount = 0;
+        resetButton.remove();
+        run();
+    }
 
     function decrement() {
 
@@ -24,10 +37,14 @@ $(document).ready(function () {
     }
 
     function stop() {
-
         clearInterval(intervalId);
-
     }
+
+    function play() {
+        run();
+    }
+
+    playButton.on('click', play);
 
     var questions = [
         {
@@ -56,9 +73,6 @@ $(document).ready(function () {
             answer: 0,
         }];
 
-    var correctAnswer = 0
-    var wrongAnswer = 0
-
     // questions loop
     for (var i = 0; i < questions.length; i++) {
         var question = '<p>' + questions[i].q + '</p>';
@@ -66,75 +80,31 @@ $(document).ready(function () {
 
         // answers loop
         for (var j = 0; j < questions[i].choices.length; j++) {
-            var choice = '<input type="radio" name="' + i + '" value=' + questions[i].choices[j] + '/>' + questions[i].choices[j];
+            var choice = '<div><input type="radio" name="' + i + '" value="' + questions[i].choices[j] + '"/>' + questions[i].choices[j] + '</div>';
             $('#questions').append(choice);
         }
     }
 
     $("#submit").click(function () {
-        // Check all inputs
-        var checkedInputs = $('input:checked');
+        // grab checked inputs
+        var inputs = $('input:checked');
 
-        for (var i = 0; questions.length; i++) {
-            console.log(checkedInputs[i]);
+        for (var i = 0; i < questions.length; i++) {
+            if (inputs[i].value === questions[i].choices[questions[i].answer]) {
+                correctAnswerCount++;
+                console.log('Correct Answer Count:', correctAnswerCount);
+            } else {
+                wrongAnswerCount++;
+                console.log('Wrong Answer Count:', wrongAnswerCount);
+            }
         }
+
+        // Stop the game
+        stop();
+        correctCountDiv.html(correctAnswerCount);
+        wrongCountDiv.html(wrongAnswerCount);
+
+        // Add reset button to end of game.
+        $('.container2').append(resetButton);
     });
-
-    function correctAnswer() {
-
-            correctAnswer++;
-            $("#submit").text("")
-
-        }
-
-
-
-
-
-    // $("#play").on("click", function () {
-    // });
-
-    // $("#reset").on("click", function(){
-    // });
-
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
