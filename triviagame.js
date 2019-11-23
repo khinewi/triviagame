@@ -5,12 +5,10 @@ $(document).ready(function () {
     var playButton = $('#play');
     var correctCountDiv = $('#Correct');
     var wrongCountDiv = $('#Wrong');
-    var resetButton = $('<button>');
     var correctAnswerCount = 0;
     var wrongAnswerCount = 0;
-    resetButton.attr('id', 'reset');
-    resetButton.html('Reset');
-    resetButton.on('click', reset);
+
+    $('#reset').on('click', reset);
 
     function run() {
         clearInterval(intervalId);
@@ -21,7 +19,9 @@ $(document).ready(function () {
         number = 60;
         correctAnswerCount = 0;
         wrongAnswerCount = 0;
-        resetButton.remove();
+        correctCountDiv.html(correctAnswerCount);
+        wrongCountDiv.html(wrongAnswerCount);
+        $('input').prop('checked', false);
         run();
     }
 
@@ -45,7 +45,7 @@ $(document).ready(function () {
     }
 
     playButton.on('click', play);
-
+ 
     var questions = [
         {
             q: "Where does the show take place?",
@@ -103,8 +103,5 @@ $(document).ready(function () {
         stop();
         correctCountDiv.html(correctAnswerCount);
         wrongCountDiv.html(wrongAnswerCount);
-
-        // Add reset button to end of game.
-        $('.container2').append(resetButton);
     });
 });
